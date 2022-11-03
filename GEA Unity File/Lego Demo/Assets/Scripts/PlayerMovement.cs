@@ -2,17 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using Cinemachine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    private CharacterController controller;
-    private Transform cam;
-    private CinemachineFreeLook free_cam;
     private float move_speed = 6f;
-    private float turn_smooth_time = 0.1f;
-    float turn_smooth_velocity;
-
+    private Rigidbody rb;
+    private GameObject cam;
     public string Mode;
     private Text ModeText;
     private bool ModeToggleDelay;
@@ -20,16 +15,15 @@ public class PlayerMovement : MonoBehaviour
 
     void Awake()
     {
-        controller = GetComponent<CharacterController>();
-        cam = GameObject.Find("Main Camera").transform;
-        free_cam = GameObject.Find("FreeLookCamera").GetComponent<CinemachineFreeLook>(); ;
-        free_cam.LookAt = this.transform;
-        free_cam.Follow = this.transform;
+        rb = GetComponent<Rigidbody>();
         build_cube = GameObject.Find("BuildCube");
+        cam = GameObject.Find("Main Camera");
+        cam.transform.SetParent(this.gameObject.transform);
+        cam.transform.localPosition = new Vector3(-17, 5, 0);
         Cursor.lockState = CursorLockMode.Locked;
 
         Mode = "PlayMode";
-        ModeText = GameObject.Find("ModeText").GetComponent<Text>(); ;
+        ModeText = GameObject.Find("ModeText").GetComponent<Text>();
         ModeText.text = "Play Mode";
         ModeToggleDelay = false;
     }
@@ -38,19 +32,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (Mode == "PlayMode")
         {
-            float horizontal = Input.GetAxisRaw("Horizontal");
-            float vertical = Input.GetAxisRaw("Vertical");
-            Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
 
-            if (direction.magnitude >= 0.1f)
-            {
-                float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
-                float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turn_smooth_velocity, turn_smooth_time);
-                transform.rotation = Quaternion.Euler(0f, angle, 0f);
-
-                Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-                controller.Move(moveDir.normalized * move_speed * Time.deltaTime);
-            }
         }
 
         if (Input.GetKeyDown(KeyCode.Space))
@@ -64,20 +46,20 @@ public class PlayerMovement : MonoBehaviour
             {
                 Mode = "BuildMode";
                 ModeText.text = "Build Mode";
+                cam.transform.SetParent(build_cube.transform);
+                cam.transform.localPosition = new Vector3(-17, 5, 0);
                 ModeToggleDelay = true;
                 StartCoroutine(ModeToggleDelayReset());
-                free_cam.LookAt = build_cube.transform;
-                free_cam.Follow = build_cube.transform;
 
             }
             else
             {
                 Mode = "PlayMode";
                 ModeText.text = "Play Mode";
+                cam.transform.SetParent(this.gameObject.transform);
+                cam.transform.localPosition = new Vector3(-17, 5, 0);
                 ModeToggleDelay = true;
                 StartCoroutine(ModeToggleDelayReset());
-                free_cam.LookAt = this.transform;
-                free_cam.Follow = this.transform;
             }
         }
     }

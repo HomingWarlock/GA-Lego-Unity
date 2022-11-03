@@ -6,7 +6,7 @@ public class BuildScript : MonoBehaviour
 {
     private PlayerMovement player_script;
     private bool move_delay;
-    [SerializeField] private GameObject basic_block;
+    private GameObject basic_block;
 
     void Start()
     {
@@ -38,14 +38,14 @@ public class BuildScript : MonoBehaviour
 
                 if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
                 {
-                    transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - 1);
+                    transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + 1);
                     move_delay = true;
                     StartCoroutine(MoveDelayReset());
                 }
 
                 if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
                 {
-                    transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + 1);
+                    transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - 1);
                     move_delay = true;
                     StartCoroutine(MoveDelayReset());
                 }
