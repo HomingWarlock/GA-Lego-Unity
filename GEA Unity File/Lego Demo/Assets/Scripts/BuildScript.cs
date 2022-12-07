@@ -50,16 +50,26 @@ public class BuildScript : MonoBehaviour
                     StartCoroutine(MoveDelayReset());
                 }
 
-                if (Input.GetKeyDown(KeyCode.Q) || Input.GetKeyDown(KeyCode.RightShift))
+                if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightShift))
                 {
                     transform.position = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
                     move_delay = true;
                     StartCoroutine(MoveDelayReset());
                 }
 
-                if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.RightControl))
+                if (Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.RightControl))
                 {
                     transform.position = new Vector3(transform.position.x, transform.position.y - 1, transform.position.z);
+                    move_delay = true;
+                    StartCoroutine(MoveDelayReset());
+                }
+
+                if (Input.GetKeyDown(KeyCode.Q))
+                {
+                    if (player_script.cam_rotation = 0)
+                    {
+                        player_script.cam.transform.localPosition = new Vector3(-17, 5, 0);
+                    }
                     move_delay = true;
                     StartCoroutine(MoveDelayReset());
                 }

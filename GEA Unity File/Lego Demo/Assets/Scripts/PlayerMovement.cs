@@ -6,8 +6,10 @@ using UnityEngine.UI;
 public class PlayerMovement : MonoBehaviour
 {
     private float move_speed = 6f;
+    private float rotate_speed = 40f;
     private Rigidbody rb;
-    private GameObject cam;
+    public GameObject cam;
+    public int cam_rotation;
     public string Mode;
     private Text ModeText;
     private bool ModeToggleDelay;
@@ -20,6 +22,7 @@ public class PlayerMovement : MonoBehaviour
         cam = GameObject.Find("Main Camera");
         cam.transform.SetParent(this.gameObject.transform);
         cam.transform.localPosition = new Vector3(-17, 5, 0);
+        cam_rotation = 0;
         Cursor.lockState = CursorLockMode.Locked;
 
         Mode = "PlayMode";
@@ -32,7 +35,36 @@ public class PlayerMovement : MonoBehaviour
     {
         if (Mode == "PlayMode")
         {
+            if (Input.GetKey(KeyCode.W))
+            {
+                rb.velocity = transform.right * move_speed;
+            }
 
+            if (Input.GetKey(KeyCode.S))
+            {
+                rb.velocity = -transform.right * move_speed;
+            }
+
+            if (Input.GetKey(KeyCode.D))
+            {
+                rb.velocity = -transform.forward * move_speed;
+            }
+
+            if (Input.GetKey(KeyCode.A))
+            {
+                rb.velocity = transform.forward * move_speed;
+            }
+
+            if (Input.GetKey(KeyCode.Q))
+            {
+                transform.Rotate(new Vector3(0, -1, 0) * Time.deltaTime * rotate_speed, Space.World);
+            }
+
+            if (Input.GetKey(KeyCode.E))
+            {
+
+                transform.Rotate(new Vector3(0, 1, 0) * Time.deltaTime * rotate_speed, Space.World);
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.Space))
