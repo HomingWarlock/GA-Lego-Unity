@@ -19,6 +19,7 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         build_cube = GameObject.Find("BuildCube");
+        build_cube.SetActive(false);
         cam = GameObject.Find("Main Camera");
         cam.transform.SetParent(this.gameObject.transform);
         cam.transform.localPosition = new Vector3(-17, 5, 0);
@@ -78,6 +79,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 Mode = "BuildMode";
                 ModeText.text = "Build Mode";
+                build_cube.SetActive(true);
                 cam_rotation = 0;
                 cam.transform.SetParent(build_cube.transform);
                 cam.transform.localPosition = new Vector3(-17, 5, 0);
@@ -90,6 +92,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 Mode = "PlayMode";
                 ModeText.text = "Play Mode";
+                build_cube.SetActive(false);
                 this.transform.rotation = Quaternion.Euler(0, 0, 0);
                 cam.transform.SetParent(this.gameObject.transform);
                 cam.transform.localPosition = new Vector3(-17, 5, 0);
