@@ -78,8 +78,10 @@ public class PlayerMovement : MonoBehaviour
             {
                 Mode = "BuildMode";
                 ModeText.text = "Build Mode";
+                cam_rotation = 0;
                 cam.transform.SetParent(build_cube.transform);
                 cam.transform.localPosition = new Vector3(-17, 5, 0);
+                cam.transform.localRotation = Quaternion.Euler(14, 90, 0);
                 ModeToggleDelay = true;
                 StartCoroutine(ModeToggleDelayReset());
 
@@ -88,8 +90,10 @@ public class PlayerMovement : MonoBehaviour
             {
                 Mode = "PlayMode";
                 ModeText.text = "Play Mode";
+                this.transform.rotation = Quaternion.Euler(0, 0, 0);
                 cam.transform.SetParent(this.gameObject.transform);
                 cam.transform.localPosition = new Vector3(-17, 5, 0);
+                cam.transform.localRotation = Quaternion.Euler(14, 90, 0);
                 ModeToggleDelay = true;
                 StartCoroutine(ModeToggleDelayReset());
             }

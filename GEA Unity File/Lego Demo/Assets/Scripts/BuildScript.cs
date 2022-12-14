@@ -5,7 +5,7 @@ using UnityEngine;
 public class BuildScript : MonoBehaviour
 {
     private PlayerMovement player_script;
-    private bool move_delay;
+    [SerializeField] private bool move_delay;
     private GameObject basic_block;
 
     void Start()
@@ -22,56 +22,253 @@ public class BuildScript : MonoBehaviour
         {
             if (!move_delay)
             {
-                if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
+                if (player_script.cam_rotation == 0)
                 {
-                    transform.position = new Vector3(transform.position.x + 1, transform.position.y, transform.position.z);
-                    move_delay = true;
-                    StartCoroutine(MoveDelayReset());
-                }
-
-                if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
-                {
-                    transform.position = new Vector3(transform.position.x - 1, transform.position.y, transform.position.z);
-                    move_delay = true;
-                    StartCoroutine(MoveDelayReset());
-                }
-
-                if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
-                {
-                    transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + 1);
-                    move_delay = true;
-                    StartCoroutine(MoveDelayReset());
-                }
-
-                if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
-                {
-                    transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - 1);
-                    move_delay = true;
-                    StartCoroutine(MoveDelayReset());
-                }
-
-                if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightShift))
-                {
-                    transform.position = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
-                    move_delay = true;
-                    StartCoroutine(MoveDelayReset());
-                }
-
-                if (Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.RightControl))
-                {
-                    transform.position = new Vector3(transform.position.x, transform.position.y - 1, transform.position.z);
-                    move_delay = true;
-                    StartCoroutine(MoveDelayReset());
-                }
-
-                if (Input.GetKeyDown(KeyCode.Q))
-                {
-                    if (player_script.cam_rotation = 0)
+                    if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
                     {
-                        player_script.cam.transform.localPosition = new Vector3(-17, 5, 0);
+                        transform.position = new Vector3(transform.position.x + 1, transform.position.y, transform.position.z);
+                        move_delay = true;
+                        StartCoroutine(MoveDelayReset());
                     }
-                    move_delay = true;
-                    StartCoroutine(MoveDelayReset());
+
+                    if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
+                    {
+                        transform.position = new Vector3(transform.position.x - 1, transform.position.y, transform.position.z);
+                        move_delay = true;
+                        StartCoroutine(MoveDelayReset());
+                    }
+
+                    if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
+                    {
+                        transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + 1);
+                        move_delay = true;
+                        StartCoroutine(MoveDelayReset());
+                    }
+
+                    if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
+                    {
+                        transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - 1);
+                        move_delay = true;
+                        StartCoroutine(MoveDelayReset());
+                    }
+
+                    if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightShift))
+                    {
+                        transform.position = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
+                        move_delay = true;
+                        StartCoroutine(MoveDelayReset());
+                    }
+
+                    if (Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.RightControl))
+                    {
+                        transform.position = new Vector3(transform.position.x, transform.position.y - 1, transform.position.z);
+                        move_delay = true;
+                        StartCoroutine(MoveDelayReset());
+                    }
+                }
+                else if (player_script.cam_rotation == 90)
+                {
+                    if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
+                    {
+                        transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - 1);
+                        move_delay = true;
+                        StartCoroutine(MoveDelayReset());
+                    }
+
+                    if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
+                    {
+                        transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + 1);
+                        move_delay = true;
+                        StartCoroutine(MoveDelayReset());
+                    }
+
+                    if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
+                    {
+                        transform.position = new Vector3(transform.position.x + 1, transform.position.y, transform.position.z);
+                        move_delay = true;
+                        StartCoroutine(MoveDelayReset());
+                    }
+
+                    if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
+                    {
+                        transform.position = new Vector3(transform.position.x - 1, transform.position.y, transform.position.z);
+                        move_delay = true;
+                        StartCoroutine(MoveDelayReset());
+                    }
+
+                    if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightShift))
+                    {
+                        transform.position = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
+                        move_delay = true;
+                        StartCoroutine(MoveDelayReset());
+                    }
+
+                    if (Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.RightControl))
+                    {
+                        transform.position = new Vector3(transform.position.x, transform.position.y - 1, transform.position.z);
+                        move_delay = true;
+                        StartCoroutine(MoveDelayReset());
+                    }
+                }
+                else if (player_script.cam_rotation == 180)
+                {
+                    if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
+                    {
+                        transform.position = new Vector3(transform.position.x - 1, transform.position.y, transform.position.z);
+                        move_delay = true;
+                        StartCoroutine(MoveDelayReset());
+                    }
+
+                    if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
+                    {
+                        transform.position = new Vector3(transform.position.x + 1, transform.position.y, transform.position.z);
+                        move_delay = true;
+                        StartCoroutine(MoveDelayReset());
+                    }
+
+                    if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
+                    {
+                        transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - 1);
+                        move_delay = true;
+                        StartCoroutine(MoveDelayReset());
+                    }
+
+                    if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
+                    {
+                        transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + 1);
+                        move_delay = true;
+                        StartCoroutine(MoveDelayReset());
+                    }
+
+                    if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightShift))
+                    {
+                        transform.position = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
+                        move_delay = true;
+                        StartCoroutine(MoveDelayReset());
+                    }
+
+                    if (Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.RightControl))
+                    {
+                        transform.position = new Vector3(transform.position.x, transform.position.y - 1, transform.position.z);
+                        move_delay = true;
+                        StartCoroutine(MoveDelayReset());
+                    }
+                }
+                else if (player_script.cam_rotation == 270)
+                {
+                    if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
+                    {
+                        transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + 1);
+                        move_delay = true;
+                        StartCoroutine(MoveDelayReset());
+                    }
+
+                    if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
+                    {
+                        transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - 1);
+                        move_delay = true;
+                        StartCoroutine(MoveDelayReset());
+                    }
+
+                    if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
+                    {
+                        transform.position = new Vector3(transform.position.x - 1, transform.position.y, transform.position.z);
+                        move_delay = true;
+                        StartCoroutine(MoveDelayReset());
+                    }
+
+                    if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
+                    {
+                        transform.position = new Vector3(transform.position.x + 1, transform.position.y, transform.position.z);
+                        move_delay = true;
+                        StartCoroutine(MoveDelayReset());
+                    }
+
+                    if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightShift))
+                    {
+                        transform.position = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
+                        move_delay = true;
+                        StartCoroutine(MoveDelayReset());
+                    }
+
+                    if (Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.RightControl))
+                    {
+                        transform.position = new Vector3(transform.position.x, transform.position.y - 1, transform.position.z);
+                        move_delay = true;
+                        StartCoroutine(MoveDelayReset());
+                    }
+                }
+
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    if (player_script.cam_rotation == 0)
+                    {
+                        player_script.cam_rotation = 90;
+                        player_script.cam.transform.localPosition = new Vector3(0, 5, 17);
+                        player_script.cam.transform.localRotation = Quaternion.Euler(14, -180, 0);
+                        move_delay = true;
+                        StartCoroutine(MoveDelayReset());
+                    }
+                    else if (player_script.cam_rotation == 90)
+                    {
+                        player_script.cam_rotation = 180;
+                        player_script.cam.transform.localPosition = new Vector3(17, 5, 0);
+                        player_script.cam.transform.localRotation = Quaternion.Euler(14, -90, 0);
+                        move_delay = true;
+                        StartCoroutine(MoveDelayReset());
+                    }
+                    else if (player_script.cam_rotation == 180)
+                    {
+                        player_script.cam_rotation = 270;
+                        player_script.cam.transform.localPosition = new Vector3(0, 5, -17);
+                        player_script.cam.transform.localRotation = Quaternion.Euler(14, 0, 0);
+                        move_delay = true;
+                        StartCoroutine(MoveDelayReset());
+                    }
+                    else if (player_script.cam_rotation == 270)
+                    {
+                        player_script.cam_rotation = 0;
+                        player_script.cam.transform.localPosition = new Vector3(-17, 5, 0);
+                        player_script.cam.transform.localRotation = Quaternion.Euler(14, -270, 0);
+                        move_delay = true;
+                        StartCoroutine(MoveDelayReset());
+                    }
+                }
+
+                    if (Input.GetKeyDown(KeyCode.Q))
+                {
+                    if (player_script.cam_rotation == 0)
+                    {
+                        player_script.cam_rotation = 270;
+                        player_script.cam.transform.localPosition = new Vector3(0, 5, -17);
+                        player_script.cam.transform.localRotation = Quaternion.Euler(14, 0, 0);
+                        move_delay = true;
+                        StartCoroutine(MoveDelayReset());
+                    }
+                    else if (player_script.cam_rotation == 270)
+                    {
+                        player_script.cam_rotation = 180;
+                        player_script.cam.transform.localPosition = new Vector3(17, 5, 0);
+                        player_script.cam.transform.localRotation = Quaternion.Euler(14, -90, 0);
+                        move_delay = true;
+                        StartCoroutine(MoveDelayReset());
+                    }
+                    else if (player_script.cam_rotation == 180)
+                    {
+                        player_script.cam_rotation = 90;
+                        player_script.cam.transform.localPosition = new Vector3(0, 5, 17);
+                        player_script.cam.transform.localRotation = Quaternion.Euler(14, -180, 0);
+                        move_delay = true;
+                        StartCoroutine(MoveDelayReset());
+                    }
+                    else if (player_script.cam_rotation == 90)
+                    {
+                        player_script.cam_rotation = 0;
+                        player_script.cam.transform.localPosition = new Vector3(-17, 5, 0);
+                        player_script.cam.transform.localRotation = Quaternion.Euler(14, -270, 0);
+                        move_delay = true;
+                        StartCoroutine(MoveDelayReset());
+                    }
                 }
             }
 
