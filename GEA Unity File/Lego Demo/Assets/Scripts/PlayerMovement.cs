@@ -14,12 +14,18 @@ public class PlayerMovement : MonoBehaviour
     private Text ModeText;
     private bool ModeToggleDelay;
     private GameObject build_cube;
+    public BuildScript build_script;
+    private bool change_mode_once;
+    private bool can_enter_vehicle;
+    public bool driving_vehicle;
+    private GameObject[] vehicle_parts;
+    private int vehicle_pieces_near;
 
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
         build_cube = GameObject.Find("BuildCube");
-        build_cube.SetActive(false);
+        build_script = build_cube.GetComponent<BuildScript>();
         cam = GameObject.Find("Main Camera");
         cam.transform.SetParent(this.gameObject.transform);
         cam.transform.localPosition = new Vector3(-17, 5, 0);
@@ -30,11 +36,15 @@ public class PlayerMovement : MonoBehaviour
         ModeText = GameObject.Find("ModeText").GetComponent<Text>();
         ModeText.text = "Play Mode";
         ModeToggleDelay = false;
+        change_mode_once = false;
+        can_enter_vehicle = false;
+        driving_vehicle = false;
+        vehicle_pieces_near = 0;
     }
 
     void Update()
     {
-        if (Mode == "PlayMode")
+        if (Mode == "PlayMode" && !driving_vehicle)
         {
             if (Input.GetKey(KeyCode.W))
             {
@@ -68,12 +78,19 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.P))
         {
-            Cursor.lockState = CursorLockMode.None;
+            if (Cursor.lockState == CursorLockMode.None)
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+            }
+            else if (Cursor.lockState == CursorLockMode.Locked)
+            {
+                Cursor.lockState = CursorLockMode.None;
+            }
         }
 
-        if (Input.GetKeyDown(KeyCode.B) && !ModeToggleDelay)
+        if (Input.GetKeyDown(KeyCode.B) && !ModeToggleDelay && !driving_vehicle)
         {            
             if (Mode == "PlayMode")
             {
@@ -100,6 +117,53 @@ public class PlayerMovement : MonoBehaviour
                 ModeToggleDelay = true;
                 StartCoroutine(ModeToggleDelayReset());
             }
+        }
+
+        if (build_script.vehicle_built && !change_mode_once)
+        {
+            vehicle_parts = GameObject.FindGameObjectsWithTag("Block");
+            Mode = "PlayMode";
+            ModeText.text = "Play Mode";
+            build_cube.SetActive(false);
+            this.transform.rotation = Quaternion.Euler(0, 0, 0);
+            cam.transform.SetParent(this.gameObject.transform);
+            cam.transform.localPosition = new Vector3(-17, 5, 0);
+            cam.transform.localRotation = Quaternion.Euler(14, 90, 0);
+            ModeToggleDelay = true;
+            StartCoroutine(ModeToggleDelayReset());
+            change_mode_once = true;
+        }
+
+        if (!driving_vehicle)
+        {
+            foreach (GameObject target in vehicle_parts)
+            {
+                if (Vector3.Distance(target.transform.position, this.transform.position) < 2)
+                {
+                    vehicle_pieces_near += 1;
+                }
+            }
+
+            if (vehicle_pieces_near > 0)
+            {
+                can_enter_vehicle = true;
+            }
+            else if (vehicle_pieces_near == 0)
+            {
+                can_enter_vehicle = false;
+            }
+
+            vehicle_pieces_near = 0;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space) && Mode == "PlayMode" && can_enter_vehicle && !driving_vehicle)
+        {
+            can_enter_vehicle = false;
+            driving_vehicle = true;
+            cam.transform.SetParent(build_script.vehicle_parent.transform);
+            cam.transform.localPosition = new Vector3(-17, 5, 0);
+            cam.transform.localRotation = Quaternion.Euler(14, 90, 0);
+            this.gameObject.SetActive(false);
         }
     }
 
